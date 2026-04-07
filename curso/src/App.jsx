@@ -4,11 +4,24 @@ import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+function App(_prop) {
+  const [count, setCount] = useState(0);
+  function saludar(user) {
+  if (user) {
+    return <h1>Hola {formatName(user)}!</h1>;
+  }
+  return <h1>Hola desconocido.</h1>;
+}
+const b = true
+if(count == 0)
+  return <p>No hay datos</p>
 
   return (
     <>
+    {count > 0 && <h1>Hola {formatName(user)}!</h1>}
+    {count > 0 ? <h1>Hola {formatName(user)}!</h1> : undefined}
+    Valid: {b ? 'true' : 'false'}
+    {saludar({})}
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
