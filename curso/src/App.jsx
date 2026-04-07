@@ -4,9 +4,8 @@ import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function App(_prop) {
+  const [count, setCount] = useState(0);
   return (
     <>
       <section id="center">
@@ -17,6 +16,7 @@ function App() {
         </div>
         <div>
           <h1>Get started</h1>
+          <h2>Hola mundo</h2>
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
