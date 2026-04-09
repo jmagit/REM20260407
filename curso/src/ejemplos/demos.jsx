@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
+import { ErrorBoundary } from '../biblioteca'
 
 export function Demos() {
     const init = useRef(10)
@@ -31,6 +32,12 @@ export function Demos() {
 
     return (
         <div>
+        <title>Demos</title>
+            <ErrorBoundary>
+                Punto: {punto.x}
+            </ErrorBoundary>
+            <input type="button" value="null" onClick={() => setPunto(null)} />
+            <input type="button" value="not null" onClick={() => setPunto({ x: 0, y: 0 })} />
             <Contador
                 init={init.current}
                 delta={1}
@@ -42,7 +49,7 @@ export function Demos() {
             <output>El init actual es: {init.current}</output>
             <input type="button" value="+" onClick={() => init.current++} />
             {/* <Coordenadas activo={activo} /> */}
-            <div>
+            {/* <div>
                 <input
                     type="button"
                     value={activo ? 'desactivar' : 'activar'}
@@ -52,7 +59,7 @@ export function Demos() {
                     isPlaying={activo}
                     src="https://mdn.github.io/learning-area/html/multimedia-and-embedding/video-and-audio-content/rabbit320.mp4"
                 />
-            </div>
+            </div> */}
         </div>
     )
 }
