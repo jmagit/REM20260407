@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { ErrorBoundary } from '../biblioteca'
+import { Calculadora } from '../ejercicios'
 
 export function Demos() {
     const init = useRef(10)
@@ -32,19 +33,21 @@ export function Demos() {
 
     return (
         <div>
-        <title>Demos</title>
-            <ErrorBoundary>
-                Punto: {punto.x}
-            </ErrorBoundary>
+            <title>Demos</title>
+            {/* <ErrorBoundary>Punto: {punto.x}</ErrorBoundary>
             <input type="button" value="null" onClick={() => setPunto(null)} />
-            <input type="button" value="not null" onClick={() => setPunto({ x: 0, y: 0 })} />
+            <input
+                type="button"
+                value="not null"
+                onClick={() => setPunto({ x: 0, y: 0 })}
+            /> */}
             <Contador
                 init={init.current}
                 delta={1}
                 onChange={v => setValor(v)}
             />
-            {/* <Contador /> */}
             <output>El valor actual es: {valor}</output>
+            <Calculadora init={init.current} coma onChange={v => setValor(v)} />
             <br />
             <output>El init actual es: {init.current}</output>
             <input type="button" value="+" onClick={() => init.current++} />
@@ -155,10 +158,17 @@ function VideoPlayer({ src, isPlaying }) {
     return (
         <div>
             <div className="btn-group">
-                <button type="button" className="btn btn-success" onClick={play}>
+                <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={play}>
                     play
                 </button>
-                <button ref={refPause} type="button" className="btn btn-warning" onClick={pause}>
+                <button
+                    ref={refPause}
+                    type="button"
+                    className="btn btn-warning"
+                    onClick={pause}>
                     pause
                 </button>
             </div>

@@ -1,1 +1,5 @@
 export * from './ErrorBoundary'
+export * from './botones'
+export * from './formateadores'
+export * from './notificaciones'
+export * from './Paginator'

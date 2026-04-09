@@ -1,0 +1,104 @@
+div.fondo-sombreado {
+    position: fixed;
+    background-color: black;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.3;
+    z-index: 9000;
+}
+
+img.ajax-wait {
+    position: fixed;
+    left: 45%;
+    top: 45%;
+    width: 10%;
+    height: auto;
+    opacity: 1;
+    z-index: 9001;
+}
+
+.loader {
+    border: 16px dotted #1a93fd;
+    /*border-top: 16px solid #abdeff;*/
+    border-radius: 50%;
+    animation: spin 5s linear infinite;
+    position: fixed;
+    left: 45%;
+    top: 45%;
+    width: 80px;
+    height: 80px;
+    z-index: 9001;
+    opacity: 1;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.errorMsg {
+    color: red;
+}
+
+.glimmer-panel {
+  border: 1px dashed #aaa;
+  background: linear-gradient(90deg, rgba(221,221,221,1) 0%, rgba(255,255,255,1) 100%);
+  animation: glimmer-animation 2s ease infinite;
+  border-radius: 6px;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.glimmer-line {
+  display: block;
+  width: 60%;
+  height: 20px;
+  margin: 10px;
+  border-radius: 4px;
+  background: #f0f0f0;
+}
+
+li.glimmer {
+  display: block;
+  width: 60%;
+  height: 20px;
+  margin: 10px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, rgba(221,221,221,1) 0%, rgba(255,255,255,1) 100%);
+  animation: glimmer-animation 1s ease infinite;
+}
+
+@keyframes glimmer-animation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Solo navegadores modernos */
+@property --color-intermedio {
+  syntax: '<color>';
+  initial-value: #e73c7e;
+  inherits: false;
+}
+
+.moderno {
+  background: linear-gradient(to right, #ee7752, var(--color-intermedio));
+  transition: --color-intermedio 1s;
+}
+
+.moderno:hover {
+  --color-intermedio: #23a6d5;
+}
