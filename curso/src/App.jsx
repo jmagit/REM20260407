@@ -1,6 +1,6 @@
 import './App.css'
 import { ErrorBoundary } from './biblioteca'
-import { Demos } from './ejemplos'
+import { Crud, Demos } from './ejemplos'
 import Home from './ejemplos/home/home'
 import { Calculadora } from './ejercicios'
 import { Footer, Header } from './layout'
@@ -10,6 +10,7 @@ const opcionesDelMenu = [
     { texto: 'inicio', url: '/inicio', componente: <Home /> },
     { texto: 'demos', url: '/demos', componente: <Demos /> },
     { texto: 'calculadora', url: '/chisme/de/hacer/numeros', componente: <Calculadora coma /> },
+    { texto: 'formularios', url: '/formularios', componente: <Crud /> },
     // {texto: '', url: '', componente: <></>},
 ]
 

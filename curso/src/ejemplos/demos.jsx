@@ -47,7 +47,7 @@ export function Demos() {
                 onChange={v => setValor(v)}
             />
             <output>El valor actual es: {valor}</output>
-            <Calculadora init={init.current} coma onChange={v => setValor(v)} />
+            <Calculadora init={init.current} onChange={v => setValor(v)} />
             <br />
             <output>El init actual es: {init.current}</output>
             <input type="button" value="+" onClick={() => init.current++} />

@@ -25,7 +25,7 @@ export function ValidationMessage({ msg }) {
 
 export function ActionMessage({ msg }) {
     if (msg) {
-        return <output className="errorMsg">{msg}</output>
+        return <output className="text-danger">{msg}</output>
     }
     return null
 }
