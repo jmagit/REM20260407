@@ -1,3 +1,5 @@
+import './comunes.css'
+
 export function Paginator({
     currentPage,
     totalPages,

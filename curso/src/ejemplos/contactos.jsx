@@ -190,7 +190,7 @@ export default function Contactos() {
                     esNuevo={modo === 'add'}
                     onEnviar={e => send(e)}
                     onVolver={cancel}
-                    onBorrar={e => remove(e)}
+                    // onBorrar={e => remove(e)}
                 />
             )
             break

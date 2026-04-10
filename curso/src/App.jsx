@@ -4,6 +4,7 @@ import { AuthContext, AuthDispatchContext, authReducer, Crud, defaultAuthContext
 import Contactos from './ejemplos/contactos'
 import Home from './ejemplos/home/home'
 import { Calculadora } from './ejercicios'
+import Muro from './ejercicios/muro'
 import { Footer, Header } from './layout'
 import React, { useReducer, useState } from 'react'
 
@@ -18,6 +19,7 @@ const opcionesDelMenu = [
     { texto: 'formularios', url: '/formularios', componente: <Crud /> },
     { texto: 'contactos', url: '/contactos', componente: <Contactos /> },
     { texto: 'async', url: '/async', componente: <DemosHooks /> },
+    { texto: 'muro', url: '/muro', componente: <Muro /> },
     // {texto: '', url: '', componente: <></>},
 ]
 

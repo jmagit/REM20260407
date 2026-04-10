@@ -1,4 +1,5 @@
 import {useFormStatus} from "react-dom";
+import './comunes.css'
 
 function ImageButton({
     className = "btn",

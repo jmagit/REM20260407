@@ -1,4 +1,5 @@
 import loadingImage from '../assets/loading.gif'
+import './comunes.css'
 
 export function Esperando() {
     return (

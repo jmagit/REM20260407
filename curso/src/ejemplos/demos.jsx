@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import { ErrorBoundary } from '../biblioteca'
+import { ErrorBoundary, UlGlimmer } from '../biblioteca'
 import { Calculadora } from '../ejercicios'
 import { Authentication } from './authentication'
 
@@ -53,7 +53,7 @@ export function Demos() {
             <output>El init actual es: {init.current}</output>
             <input type="button" value="+" onClick={() => init.current++} />
             {/* <Coordenadas activo={activo} /> */}
-            <div>
+            {/* <div>
                 <input
                     type="button"
                     value={activo ? 'desactivar' : 'activar'}
@@ -63,7 +63,8 @@ export function Demos() {
                     isPlaying={activo}
                     src="https://mdn.github.io/learning-area/html/multimedia-and-embedding/video-and-audio-content/rabbit320.mp4"
                 />
-            </div>
+            </div> */}
+            <UlGlimmer />
         </div>
     )
 }
