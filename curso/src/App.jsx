@@ -1,6 +1,7 @@
 import './App.css'
 import { ErrorBoundary } from './biblioteca'
 import { Crud, Demos } from './ejemplos'
+import Contactos from './ejemplos/contactos'
 import Home from './ejemplos/home/home'
 import { Calculadora } from './ejercicios'
 import { Footer, Header } from './layout'
@@ -11,6 +12,7 @@ const opcionesDelMenu = [
     { texto: 'demos', url: '/demos', componente: <Demos /> },
     { texto: 'calculadora', url: '/chisme/de/hacer/numeros', componente: <Calculadora coma /> },
     { texto: 'formularios', url: '/formularios', componente: <Crud /> },
+    { texto: 'contactos', url: '/contactos', componente: <Contactos /> },
     // {texto: '', url: '', componente: <></>},
 ]
 
@@ -43,7 +45,7 @@ function Cuerpo({ titulo = 'Sin titulo', children }) {
     return (
         <>
             <h1>{titulo}</h1>
-            <main className="container-fluid text-start" style={{ marginBottom: 50 }}>{children}</main>
+            <main className="container-fluid text-start" style={{ marginBottom: 60 }}>{children}</main>
         </>
     )
 }

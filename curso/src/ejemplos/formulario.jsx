@@ -217,6 +217,12 @@ function Formulario(props) {
                 </button>
                 <button type="button" onClick={props.onVolver}>Volver</button>
             </div>
+            {import.meta.env.DEV && (
+                <>
+                    <div className="alert alert-warning" role="alert">{JSON.stringify(elemento)}</div>
+                    <div className="alert alert-danger" role="alert">{JSON.stringify(errorsMsg)}</div>
+                </>
+            )}
         </form>
     )
 }
