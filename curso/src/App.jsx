@@ -1,12 +1,6 @@
 import './App.css'
 import { ErrorBoundary } from './biblioteca'
-import { Crud, Demos } from './ejemplos'
-import {
-    AuthContext,
-    AuthDispatchContext,
-    authReducer,
-    defaultAuthContext,
-} from './ejemplos/auth-context'
+import { AuthContext, AuthDispatchContext, authReducer, Crud, defaultAuthContext, Demos, DemosHooks } from './ejemplos'
 import Contactos from './ejemplos/contactos'
 import Home from './ejemplos/home/home'
 import { Calculadora } from './ejercicios'
@@ -23,6 +17,7 @@ const opcionesDelMenu = [
     },
     { texto: 'formularios', url: '/formularios', componente: <Crud /> },
     { texto: 'contactos', url: '/contactos', componente: <Contactos /> },
+    { texto: 'async', url: '/async', componente: <DemosHooks /> },
     // {texto: '', url: '', componente: <></>},
 ]
 

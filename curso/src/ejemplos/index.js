@@ -1,2 +1,6 @@
 export * from './demos'
 export * from './formulario'
+export * from './contactos'
+export * from './auth-context'
+export * from './authentication'
+export * from './demos-hooks'
