@@ -48,8 +48,6 @@ export function Crud() {
     }
 
     switch (modo) {
-        case 'view':
-            return <View elemento={elemento} onVolver={cancel} />
         case 'add':
         case 'edit':
             return (
@@ -60,10 +58,12 @@ export function Crud() {
                     onVolver={cancel}
                 />
             )
+        case 'view':
+            return <View elemento={elemento} onVolver={cancel} />
         default:
             return (
                 <List
-                    // onAdd={addHandler}
+                    onAdd={addHandler}
                     onEdit={id => editHandler(id)}
                     onView={id => viewHandler(id)}
                     onDelete={id => remove(id)}
@@ -133,7 +133,6 @@ function Formulario(props) {
                         : control.validationMessage
             }
         }
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setInvalid(invalid)
         setErrorsMsg(errorsMsg)
     }, [elemento])
@@ -182,7 +181,7 @@ function Formulario(props) {
                 <ActionMessage msg={errorsMsg?.nombre} />
             </div>
             <div>
-                <label className="form-label" htmlFor="nombre">
+                <label className="form-label" htmlFor="apellidos">
                     Apellidos:
                 </label>
                 <input
@@ -192,12 +191,28 @@ function Formulario(props) {
                     value={elemento.apellidos}
                     minLength="2"
                     maxLength="10"
+                    pattern='^[A-ZÑ].*'
+                    data-pattern='Debe empezar con mayúsculas'
                     onChange={handleChange}
                 />
                 <ActionMessage msg={errorsMsg?.apellidos} />
             </div>
             <div>
-                <label className="form-label" htmlFor="nombre">
+                <label className="form-label" htmlFor="email">
+                    Correo:
+                </label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={elemento.email}
+                    maxLength="100"
+                    onChange={handleChange}
+                />
+                <ActionMessage msg={errorsMsg?.email} />
+            </div>
+            <div>
+                <label className="form-label" htmlFor="edad">
                     edad:
                 </label>
                 <input

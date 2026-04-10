@@ -1,3 +1,5 @@
+import loadingImage from '../assets/loading.gif'
+
 export function Esperando() {
     return (
         <>
@@ -13,6 +15,16 @@ export function Fallback({ message = 'Esperando ...' }) {
             <img src={loadingImage} width={40} height={40} alt="Cargando ..." />
             <h1 className='ms-2'>{message}</h1>
         </div>
+    )
+}
+
+export function UlGlimmer({ lines = 4 }) {
+    return (
+        <ul>
+            {[...'x'.repeat(lines)].map((_, index) => (
+                <li key={index} className="glimmer" />
+            ))}
+        </ul>
     )
 }
 
@@ -133,14 +145,4 @@ export function ErrorMessageModal({ msg, tipo = 'error', onClear }) {
         )
     }
     return null
-}
-
-export function UlGlimmer({ lines = 4 }) {
-    return (
-        <ul>
-            {[...'x'.repeat(lines)].map((_, index) => (
-                <li key={index} className="glimmer" />
-            ))}
-        </ul>
-    )
 }
