@@ -1,4 +1,5 @@
 import imgLogo from '../assets/logo.png'
+import { Authentication } from '../ejemplos/authentication'
 
 export function Header(props) {
     const menuClick = (indice, ev) => {
@@ -37,6 +38,7 @@ export function Header(props) {
                             activo={props.activo}
                             onChanged={props.onMenuChange}
                         />
+                        <Authentication />
                     </div>
                 </div>
             </nav>

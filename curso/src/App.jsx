@@ -1,16 +1,26 @@
 import './App.css'
 import { ErrorBoundary } from './biblioteca'
 import { Crud, Demos } from './ejemplos'
+import {
+    AuthContext,
+    AuthDispatchContext,
+    authReducer,
+    defaultAuthContext,
+} from './ejemplos/auth-context'
 import Contactos from './ejemplos/contactos'
 import Home from './ejemplos/home/home'
 import { Calculadora } from './ejercicios'
 import { Footer, Header } from './layout'
-import React, { useState } from 'react'
+import React, { useReducer, useState } from 'react'
 
 const opcionesDelMenu = [
     { texto: 'inicio', url: '/inicio', componente: <Home /> },
     { texto: 'demos', url: '/demos', componente: <Demos /> },
-    { texto: 'calculadora', url: '/chisme/de/hacer/numeros', componente: <Calculadora coma /> },
+    {
+        texto: 'calculadora',
+        url: '/chisme/de/hacer/numeros',
+        componente: <Calculadora coma />,
+    },
     { texto: 'formularios', url: '/formularios', componente: <Crud /> },
     { texto: 'contactos', url: '/contactos', componente: <Contactos /> },
     // {texto: '', url: '', componente: <></>},
@@ -18,20 +28,26 @@ const opcionesDelMenu = [
 
 function App() {
     const [seleccionado, setSeleccionado] = useState(0)
+    const [auth, dispatch] = useReducer(authReducer, defaultAuthContext)
 
     return (
         <>
-            <Header
-                menu={opcionesDelMenu}
-                activo={seleccionado}
-                onMenuChange={opc => setSeleccionado(opc)}
-            />
-            <Cuerpo titulo={<i>{opcionesDelMenu[seleccionado].texto}</i>}>
-                <ErrorBoundary>
-                    {opcionesDelMenu[seleccionado].componente}
-                </ErrorBoundary>
-            </Cuerpo>
-            <Footer />
+            <AuthContext.Provider value={auth}>
+                <AuthDispatchContext.Provider value={dispatch}>
+                    <Header
+                        menu={opcionesDelMenu}
+                        activo={seleccionado}
+                        onMenuChange={opc => setSeleccionado(opc)}
+                    />
+                    <Cuerpo
+                        titulo={<i>{opcionesDelMenu[seleccionado].texto}</i>}>
+                        <ErrorBoundary>
+                            {opcionesDelMenu[seleccionado].componente}
+                        </ErrorBoundary>
+                    </Cuerpo>
+                    <Footer />
+                </AuthDispatchContext.Provider>
+            </AuthContext.Provider>
         </>
     )
 }
@@ -45,7 +61,11 @@ function Cuerpo({ titulo = 'Sin titulo', children }) {
     return (
         <>
             <h1>{titulo}</h1>
-            <main className="container-fluid text-start" style={{ marginBottom: 60 }}>{children}</main>
+            <main
+                className="container-fluid text-start"
+                style={{ marginBottom: 60 }}>
+                {children}
+            </main>
         </>
     )
 }

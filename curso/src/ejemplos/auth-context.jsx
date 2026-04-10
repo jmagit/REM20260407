@@ -19,7 +19,7 @@ export const logoutAction = () => {
     return {type: AUTH_LOGOUT};
 };
 
-export const authReducer = (auth, action) => {
+export const authReducer = (oldState, action) => {
     switch (action.type) {
         case AUTH_LOGIN: {
             return {
@@ -31,7 +31,7 @@ export const authReducer = (auth, action) => {
         }
         case AUTH_LOGOUT: {
             return {
-                ...auth,
+                ...oldState,
                 isAuth: false,
                 authToken: "",
             };
