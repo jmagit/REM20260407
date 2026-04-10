@@ -1,4 +1,5 @@
 import {
+    lazy,
     Suspense,
     use,
     useDeferredValue,
@@ -16,6 +17,8 @@ import {
     UlGlimmer,
 } from '../biblioteca'
 
+const MuroLazy = lazy(() => delayForDemo(import('../ejercicios/muro')))
+
 export function DemosHooks() {
     const [ejemplo, setEjemplo] = useState(0)
     const ejemplos = [
@@ -24,6 +27,7 @@ export function DemosHooks() {
         { ejemplo: 'T. Optimistas', componente: <TransicionesOptimistas /> },
         { ejemplo: 'Deferred Value', componente: <DeferredValue /> },
         { ejemplo: 'Suspender', componente: <SuspenseWithUse /> },
+        { ejemplo: 'Lazy', componente: <SuspenseWithLazy /> },
     ]
     return (
         <>
@@ -291,6 +295,71 @@ function DeferredValueResult({ rows }) {
     return <ul className="opacity-50 transition-opacity">{items}</ul>
 }
 
+// function DeferredValue() {
+//     const opciones = [5, 10, 20, 30, 50]
+//     const [rows, setRows] = useState(20)
+//     const deferredRows = useDeferredValue(rows)
+
+//     return (
+//         <>
+//             <div className="d-flex flex-row align-items-center gx-2 gy-2">
+//                 <label className="me-2">Rows:</label>
+//                 <select
+//                     className="me-2"
+//                     value={rows}
+//                     onChange={ev => {
+//                         setRows(ev.target.value)
+//                     }}>
+//                     {opciones.map(item => (
+//                         <option key={item}>{item}</option>
+//                     ))}
+//                 </select>
+//             {/* <Suspense
+//                 fallback={
+//                     <Fallback message="⌛ Actualizando el componente..." />
+//                 }> */}
+//                 <DeferredValueResult rows={rows} />
+//             {/* </Suspense>{' '} */}
+//             </div>
+//         </>
+//     )
+// }
+
+// function deferredValue(rows) {
+//       return new Promise(resolve =>
+//             setTimeout(() => {
+//                 const list = []
+//                 for (let i = 0; i < rows; i++) {
+//                     list.push(
+//                         <li key={i}>
+//                             Resultado {i} de {rows}
+//                         </li>,
+//                     )
+//                 }
+//                 resolve(list)
+//             }, 1000),
+//         )
+// }
+
+// function DeferredValueResult({ rows }) {
+//     // const items = useMemo(() => {
+//     //     const list = []
+//     //     for (let i = 0; i < rows; i++) {
+//     //         list.push(
+//     //             <li key={i}>
+//     //                 Resultado {i} de {rows}
+//     //             </li>,
+//     //         )
+//     //     }
+//     //     return list
+//     // }, [rows])
+//     const [promesa, setPromesa] = useState(async () => await deferredValue(rows), [rows])
+//     const items = use(promesa)
+//     if(items)
+//         return <ul className="opacity-50 transition-opacity">{items}</ul>
+//     return <UlGlimmer />
+// }
+
 function SuspenseWithUse() {
     const [messagePromise, setMessagePromise] = useState(null)
     const [show, setShow] = useState(false)
@@ -355,4 +424,24 @@ function fetchMessageKO() {
             return '❌ Promesa rechazada'
         },
     )
+}
+
+function SuspenseWithLazy() {
+    return (
+        <>
+            <h2>Carga perezosa</h2>
+            <Suspense
+                fallback={
+                    <Fallback message="⌛ Descargando el componente..." />
+                }>
+                <MuroLazy />
+            </Suspense>{' '}
+        </>
+    )
+}
+
+function delayForDemo(promise, ms = 2000) {
+    return new Promise(resolve => {
+        setTimeout(resolve, ms)
+    }).then(() => promise)
 }
