@@ -24,8 +24,8 @@ export function DemosHooks() {
     const ejemplos = [
         { ejemplo: 'Notificaciones', componente: <Notificaciones /> },
         { ejemplo: 'Transiciones', componente: <Transiciones /> },
-        { ejemplo: 'T. Optimistas', componente: <TransicionesOptimistas /> },
-        { ejemplo: 'Deferred Value', componente: <DeferredValue /> },
+        { ejemplo: 'Optimistas y Deferred', componente: <TransicionesOptimistasDeferred /> },
+        // { ejemplo: 'Deferred Value', componente: <DeferredValue /> },
         { ejemplo: 'Suspender', componente: <SuspenseWithUse /> },
         { ejemplo: 'Lazy', componente: <SuspenseWithLazy /> },
     ]
@@ -92,7 +92,7 @@ function Notificaciones() {
     )
 }
 function Transiciones() {
-    const [pagina, setPagina] = useState(1)
+    const [pagina, setPagina] = useState(0)
     const [isPending, startTransition] = useTransition()
     const [listado, setListado] = useState([])
     const [errorMsg, setErrorMsg] = useState('')
@@ -101,7 +101,9 @@ function Transiciones() {
         startTransition(async () => {
             setErrorMsg('')
             try {
-                const resp = await fetch(`${url}/v2/list?page=${page}&limit=10`)
+                const resp = await delayForDemo(
+                    fetch(`${url}/v2/list?page=${page + 1}&limit=10`),
+                )
                 if (!resp.ok) {
                     setErrorMsg(
                         `Error respuesta: ${resp.status} - ${resp.statusText}`,
@@ -158,7 +160,7 @@ function Transiciones() {
         </>
     )
 }
-function TransicionesOptimistas() {
+function TransicionesOptimistasDeferred() {
     const opciones = [5, 10, 20, 30, 50]
     const [rows, setRows] = useState(20)
     const [resultado, setResultado] = useState('(sin resultado)')
@@ -176,9 +178,30 @@ function TransicionesOptimistas() {
     const consultar = () => {
         setErrorMsg('')
         startTransition(async () => {
-            generateNextState(`${totalRows / rows} (optimista)`)
-            const resp = await fetch(
-                `http://localhost:4321/api/contactos?_page=count&_rows=${rows}`,
+            generateNextState(`${Math.ceil(totalRows / rows)} (optimista)`)
+            const resp = await delayForDemo(
+                fetch(
+                    `http://localhost:4321/api/contactos?_page=count&_rows=${rows}`,
+                ),
+            )
+            if (!resp.ok) {
+                setErrorMsg(`${resp.status} - ${resp.statusText}`)
+                return
+            }
+            // {"pages": 11,"rows": 101}
+            const data = await resp.json()
+            setResultado(`${data.pages} (definitivo)`)
+        })
+    }
+    const cambiar = ev => {
+        const value = ev.target.value
+        setRows(value)
+        setErrorMsg('')
+        startTransition(async () => {
+            const resp = await delayForDemo(
+                fetch(
+                    `http://localhost:4321/api/contactos?_page=count&_rows=${value}`,
+                ),
             )
             if (!resp.ok) {
                 setErrorMsg(`${resp.status} - ${resp.statusText}`)
@@ -192,6 +215,7 @@ function TransicionesOptimistas() {
 
     return (
         <>
+            <h2>Transiciones optimistas y en diferido</h2>
             <div className="d-flex flex-row align-items-center gx-2 gy-2">
                 <label className="me-2">Rows:</label>
                 <input
@@ -200,48 +224,24 @@ function TransicionesOptimistas() {
                     value={rows}
                     onChange={ev => setRows(ev.target.value)}
                 />
-                <select
-                    className="me-2"
-                    value={rows}
-                    onChange={ev => setRows(ev.target.value)}>
-                    {opciones.map(item => (
-                        <option key={item}>{item}</option>
-                    ))}
-                </select>
                 <input
                     className="me-2"
                     type="button"
-                    value="consultar"
+                    value="optimista"
                     onClick={consultar}
                 />
-                {isPending && (
-                    <span className="me-2 text-success">Consultando ...</span>
-                )}
-                <output className="me-2">Resultado: {optimisticState}</output>
-                {errorMsg && (
-                    <output
-                        className="me-2 text-danger"
-                        style={{ color: 'red' }}>
-                        ERROR: {errorMsg}
-                    </output>
-                )}
-            </div>
-            <div className="d-flex flex-row align-items-center gx-2 gy-2">
-                <label className="me-2">Rows:</label>
+                <label className="me-2">Deferred (onChange):</label>
                 <select
                     className="me-2"
                     value={rows}
-                    onChange={ev => {
-                        setRows(ev.target.value)
-                        consultar()
-                    }}>
+                    onChange={cambiar}>
                     {opciones.map(item => (
                         <option key={item}>{item}</option>
                     ))}
                 </select>
-                <output className="me-2">Seleccionado: {rows}</output>
-                <output className="me-2">Resultado: {resultado}</output>
-                <output className="me-2">Resultado: {deferredResultado}</output>
+                {isPending && (
+                    <span className="me-2 text-success">Consultando ...</span>
+                )}
                 {errorMsg && (
                     <output
                         className="me-2 text-danger"
@@ -250,6 +250,17 @@ function TransicionesOptimistas() {
                     </output>
                 )}
             </div>
+            <h5 className="mt-2">Resultados:</h5>
+            <dl className="list-inline">
+                <dt>rows</dt>
+                <dd>{rows}</dd>
+                <dt>state</dt>
+                <dd>{isPending ? 'Consultando ...' : resultado}</dd>
+                <dt>optimistic</dt>
+                <dd>{optimisticState}</dd>
+                <dt>deferred</dt>
+                <dd>{deferredResultado}</dd>
+            </dl>
         </>
     )
 }
